@@ -25,4 +25,3 @@ app.include_router(document_controller.router, prefix="/api/v1")
 @app.get("/")
 def health_check():
     return {"status": "ok", "app": settings.APP_NAME}
-

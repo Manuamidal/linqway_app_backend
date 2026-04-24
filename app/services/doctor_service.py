@@ -4,10 +4,10 @@ from app.schemas.doctor import DoctorCreate, DoctorUpdate
 
 
 def get_all_doctors(db: Session) -> list[Doctor]:
-    return db.query(Doctor).all()
+    return db.query(Doctor).order_by(Doctor.name.asc()).all()
 
 
-def get_doctor_by_id(db: Session, doctor_id: int) -> Doctor | None:
+def get_doctor_by_id(db: Session, doctor_id: str) -> Doctor | None:
     return db.query(Doctor).filter(Doctor.id == doctor_id).first()
 
 
@@ -19,7 +19,7 @@ def create_doctor(db: Session, data: DoctorCreate) -> Doctor:
     return doctor
 
 
-def update_doctor(db: Session, doctor_id: int, data: DoctorUpdate) -> Doctor | None:
+def update_doctor(db: Session, doctor_id: str, data: DoctorUpdate) -> Doctor | None:
     doctor = get_doctor_by_id(db, doctor_id)
     if not doctor:
         return None
@@ -30,7 +30,7 @@ def update_doctor(db: Session, doctor_id: int, data: DoctorUpdate) -> Doctor | N
     return doctor
 
 
-def delete_doctor(db: Session, doctor_id: int) -> bool:
+def delete_doctor(db: Session, doctor_id: str) -> bool:
     doctor = get_doctor_by_id(db, doctor_id)
     if not doctor:
         return False

@@ -13,7 +13,7 @@ def list_doctors(db: Session = Depends(get_db)):
 
 
 @router.get("/{doctor_id}", response_model=DoctorResponse)
-def get_doctor(doctor_id: int, db: Session = Depends(get_db)):
+def get_doctor(doctor_id: str, db: Session = Depends(get_db)):
     doctor = doctor_service.get_doctor_by_id(db, doctor_id)
     if not doctor:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Doctor not found")
@@ -26,7 +26,7 @@ def create_doctor(data: DoctorCreate, db: Session = Depends(get_db)):
 
 
 @router.put("/{doctor_id}", response_model=DoctorResponse)
-def update_doctor(doctor_id: int, data: DoctorUpdate, db: Session = Depends(get_db)):
+def update_doctor(doctor_id: str, data: DoctorUpdate, db: Session = Depends(get_db)):
     doctor = doctor_service.update_doctor(db, doctor_id, data)
     if not doctor:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Doctor not found")
@@ -34,7 +34,7 @@ def update_doctor(doctor_id: int, data: DoctorUpdate, db: Session = Depends(get_
 
 
 @router.delete("/{doctor_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_doctor(doctor_id: int, db: Session = Depends(get_db)):
+def delete_doctor(doctor_id: str, db: Session = Depends(get_db)):
     deleted = doctor_service.delete_doctor(db, doctor_id)
     if not deleted:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Doctor not found")
